@@ -1,13 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:api_com/api_com.dart';
 import 'package:api_com/src/core/com.dart';
 import 'package:http/http.dart' as http;
 import 'package:palestine_console/palestine_console.dart';
 
 class ComInterface {
-  ComInterface() : _connectivity = Connectivity();
+  ComInterface() : _connectivity = Connectivity() {
+    if (!const bool.fromEnvironment('dart.vm.product')) {
+      HttpClient.enableTimelineLogging = true;
+    }
+  }
 
   final Connectivity _connectivity;
+  final http.Client _httpClient = http.Client();
 
   ComConfig config = ComConfig(onConnectionLose: () {
     Print.red('NO CONNECTIVITY', name: apiComPackageName);
@@ -123,7 +129,7 @@ class ComInterface {
     ComRequest request,
     Stopwatch stopwatch,
   ) async {
-    final rawResponse = await http.post(
+    final rawResponse = await _httpClient.post(
       Uri.parse(request.getUrl()),
       headers: request.headers,
       body: jsonEncode(request.parameters),
@@ -143,7 +149,7 @@ class ComInterface {
     ComRequest request,
     Stopwatch stopwatch,
   ) async {
-    final rawResponse = await http.put(
+    final rawResponse = await _httpClient.put(
       Uri.parse(request.getUrl()),
       headers: request.headers,
       body: jsonEncode(request.parameters),
@@ -163,7 +169,7 @@ class ComInterface {
     ComRequest request,
     Stopwatch stopwatch,
   ) async {
-    final rawResponse = await http.delete(
+    final rawResponse = await _httpClient.delete(
       Uri.parse(request.getUrl()),
       headers: request.headers,
       body: jsonEncode(request.parameters),
@@ -183,7 +189,7 @@ class ComInterface {
     ComRequest request,
     Stopwatch stopwatch,
   ) async {
-    final rawResponse = await http.patch(
+    final rawResponse = await _httpClient.patch(
       Uri.parse(request.getUrl()),
       headers: request.headers,
       body: jsonEncode(request.parameters),
@@ -203,7 +209,7 @@ class ComInterface {
     ComRequest request,
     Stopwatch stopwatch,
   ) async {
-    final rawResponse = await http.get(
+    final rawResponse = await _httpClient.get(
       Uri.parse(request.getUrl()),
       headers: request.headers,
     );
