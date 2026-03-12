@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(fvm --version)",
+      "Bash(find /Users/adamvetrovsky/Repozitare/api_com_fork/lib/src -name *.dart -type f)",
+      "Bash(fvm list:*)",
+      "Bash(fvm releases:*)",
+      "Bash(fvm use:*)",
+      "Bash(fvm dart:*)",
+      "Bash(fvm flutter:*)"
+    ]
+  }
+}
