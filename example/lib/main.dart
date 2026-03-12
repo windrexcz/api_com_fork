@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:api_com/api_com.dart';
 
 void main() {
-  if (!const bool.fromEnvironment('dart.vm.product')) {
-    HttpClient.enableTimelineLogging = true;
-  }
+  HttpClient.enableTimelineLogging = true;
 
   Com.config = ComConfig(
     mainHost: 'api.spacexdata.com/v4',

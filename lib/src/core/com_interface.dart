@@ -7,9 +7,7 @@ import 'package:palestine_console/palestine_console.dart';
 
 class ComInterface {
   ComInterface() : _connectivity = Connectivity() {
-    if (!const bool.fromEnvironment('dart.vm.product')) {
-      HttpClient.enableTimelineLogging = true;
-    }
+    HttpClient.enableTimelineLogging = true;
   }
 
   final Connectivity _connectivity;
